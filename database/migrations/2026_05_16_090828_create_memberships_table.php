@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('memberships', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('organization_id')->constrained()->onDelete('cascade');
-            $table->string('role'); // e.g., 'member', 'admin'
+             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('organization_id')->constrained()->cascadeOnDelete();
+            $table->string('role')->default('Member');
+            $table->string('status')->default('pending');
             $table->timestamps();
+
+             $table->unique(['user_id', 'organization_id']);
         });
     }
 
