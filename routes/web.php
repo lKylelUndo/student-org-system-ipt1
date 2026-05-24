@@ -7,6 +7,7 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureProfileIsComplete;
 use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
