@@ -20,7 +20,7 @@
                 <a href="{{ $organizationsUrl }}" class="sos-nav-link {{ request()->is('organizations*') ? 'sos-nav-link-active' : '' }}">Organizations</a>
             </li>
             <li>
-                <a href="{{ $membersUrl }}" class="sos-nav-link {{ request()->is('members*') ? 'sos-nav-link-active' : '' }}">Members</a>
+                <a href="{{ $membersUrl }}" class="sos-nav-link {{ request()->is('members*') ? 'sos-nav-link-active' : '' }}">My Organizations</a>
             </li>
         </ul>
 
@@ -34,7 +34,7 @@
                     <a href="{{ $organizationsUrl }}" class="sos-nav-link {{ request()->is('organizations*') ? 'sos-nav-link-active' : '' }}">Org</a>
                 </li>
                 <li>
-                    <a href="{{ $membersUrl }}" class="sos-nav-link {{ request()->is('members*') ? 'sos-nav-link-active' : '' }}">Members</a>
+                    <a href="{{ $membersUrl }}" class="sos-nav-link {{ request()->is('members*') ? 'sos-nav-link-active' : '' }}">My Orgs</a>
                 </li>
             </ul>
             <div class="flex flex-col items-center gap-3">

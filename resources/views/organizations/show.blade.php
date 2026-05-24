@@ -17,6 +17,18 @@
                 </p>
             </div>
             <div class="p-6 sm:p-10">
+                @if ($organization->status->value !== 'approved')
+                    <div class="mb-6 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                        @if ($organization->status->value === 'pending')
+                            This organization is waiting for admin approval.
+                        @elseif ($organization->status->value === 'declined')
+                            This organization was declined by an administrator.
+                        @else
+                            This organization is currently suspended.
+                        @endif
+                    </div>
+                @endif
+
                 <h2 class="text-lg font-semibold text-sos-blue">About</h2>
                 <p class="mt-3 leading-relaxed text-sos-blue/80">{{ $organization->description }}</p>
 
@@ -27,7 +39,7 @@
                         @elseif ($userMembership->status->value === 'active')
                             <span class="sos-badge bg-green-100 text-green-800">You are a member</span>
                         @endif
-                    @else
+                    @elseif ($organization->status->value === 'approved')
                         <form action="{{ route('organizations.join', $organization) }}" method="POST">
                             @csrf
                             <button type="submit" class="sos-btn-yellow">Join Organization</button>

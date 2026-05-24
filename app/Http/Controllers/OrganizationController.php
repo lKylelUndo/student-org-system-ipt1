@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\MembershipRole;
 use App\Enums\MembershipStatus;
+use App\Enums\OrganizationStatus;
 use App\Models\Membership;
 use App\Models\Organization;
 use Illuminate\Http\RedirectResponse;
@@ -17,6 +18,7 @@ class OrganizationController extends Controller
         $search = $request->string('search')->trim();
 
         $organizations = Organization::query()
+            ->where('status', OrganizationStatus::Approved)
             ->withCount(['memberships as members_count' => function ($query) {
                 $query->where('status', MembershipStatus::Active->value);
             }])
@@ -64,6 +66,7 @@ class OrganizationController extends Controller
         $organization = Organization::create([
             ...$validated,
             'created_by' => auth()->id(),
+            'status' => OrganizationStatus::Pending,
         ]);
 
         Membership::create([
@@ -75,7 +78,7 @@ class OrganizationController extends Controller
 
         return redirect()
             ->route('organizations.show', $organization)
-            ->with('success', 'Organization created successfully.');
+            ->with('success', 'Organization submitted for admin approval.');
     }
 
     public function edit(Organization $organization): View|RedirectResponse

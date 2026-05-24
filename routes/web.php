@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminOrganizationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureProfileIsComplete;
+use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
@@ -14,6 +16,17 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
+});
+
+Route::redirect('/admin/login', '/login');
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', EnsureUserIsAdmin::class])->group(function () {
+    Route::get('/organizations', [AdminOrganizationController::class, 'index'])->name('organizations.index');
+    Route::get('/organizations/{organization}', [AdminOrganizationController::class, 'show'])->name('organizations.show');
+    Route::post('/organizations/{organization}/approve', [AdminOrganizationController::class, 'approve'])->name('organizations.approve');
+    Route::post('/organizations/{organization}/decline', [AdminOrganizationController::class, 'decline'])->name('organizations.decline');
+    Route::post('/organizations/{organization}/suspend', [AdminOrganizationController::class, 'suspend'])->name('organizations.suspend');
+    Route::delete('/organizations/{organization}', [AdminOrganizationController::class, 'destroy'])->name('organizations.destroy');
 });
 
 Route::middleware('auth')->group(function () {
@@ -38,5 +51,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/memberships/{membership}/approve', [MembershipController::class, 'approve'])->name('memberships.approve');
         Route::post('/memberships/{membership}/decline', [MembershipController::class, 'decline'])->name('memberships.decline');
         Route::post('/memberships/{membership}/suspend', [MembershipController::class, 'suspend'])->name('memberships.suspend');
+        Route::delete('/memberships/{membership}', [MembershipController::class, 'remove'])->name('memberships.remove');
     });
 });

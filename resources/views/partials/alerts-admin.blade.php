@@ -1,5 +1,5 @@
 @if (session('success') || session('error') || $errors->any())
-    <div class="sos-container pt-6 pb-2">
+    <div class="sos-container mt-8 pt-2 pb-2">
         @if (session('success'))
             <div class="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800" role="alert">
                 {{ session('success') }}

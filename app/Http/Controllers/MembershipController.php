@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\MembershipRole;
 use App\Enums\MembershipStatus;
+use App\Enums\OrganizationStatus;
 use App\Models\Membership;
 use App\Models\Organization;
 use Illuminate\Http\RedirectResponse;
@@ -47,6 +48,10 @@ class MembershipController extends Controller
 
     public function join(Organization $organization): RedirectResponse
     {
+        if ($organization->status !== OrganizationStatus::Approved) {
+            return back()->with('error', 'This organization is not open for membership yet.');
+        }
+
         $user = auth()->user();
         $existing = $user->membershipFor($organization);
 
@@ -112,6 +117,24 @@ class MembershipController extends Controller
         $membership->update(['status' => MembershipStatus::Suspended]);
 
         return back()->with('success', $membership->user->name.' has been suspended.');
+    }
+
+    public function remove(Membership $membership): RedirectResponse
+    {
+        $this->authorizeManage($membership);
+
+        if ($membership->status === MembershipStatus::Pending) {
+            return back()->with('error', 'Use decline to reject pending join requests.');
+        }
+
+        if ($membership->role === MembershipRole::President) {
+            return back()->with('error', 'Cannot remove the organization president.');
+        }
+
+        $name = $membership->user->name;
+        $membership->delete();
+
+        return back()->with('success', $name.' has been removed from the organization.');
     }
 
     public function updateRole(Request $request, Membership $membership): RedirectResponse

@@ -12,6 +12,10 @@ class EnsureProfileIsComplete
     {
         $user = $request->user();
 
+        if ($user?->isAdmin()) {
+            return redirect()->route('admin.organizations.index');
+        }
+
         if ($user && ! $user->hasCompletedProfile() && ! $request->routeIs('profile.setup')) {
             return redirect()->route('profile.setup');
         }

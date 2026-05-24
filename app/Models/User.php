@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->hasMany(Organization::class, 'created_by');
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
     public function hasCompletedProfile(): bool
     {
         return $this->profile_completed_at !== null;

@@ -1,6 +1,6 @@
 @extends('layouts.authenticated')
 
-@section('title', 'Members')
+@section('title', 'My Organizations')
 
 @section('content')
     @php
@@ -10,8 +10,8 @@
     <div class="sos-container">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-                <h1 class="sos-page-title">Member List</h1>
-                <p class="sos-page-subtitle">Manage organization members, roles, and join requests</p>
+                <h1 class="sos-page-title">My Organizations</h1>
+                <p class="sos-page-subtitle">Manage members, roles, and join requests for organizations you lead</p>
             </div>
             <p class="sos-badge-blue text-sm">
                 {{ $memberships->count() }} record(s)
@@ -111,6 +111,17 @@
                                             <form action="{{ route('memberships.suspend', $membership) }}" method="POST" onsubmit="return confirm('Suspend this member?');">
                                                 @csrf
                                                 <button type="submit" class="sos-btn-danger px-3 py-1.5 text-xs">Suspend</button>
+                                            </form>
+                                            <form action="{{ route('memberships.remove', $membership) }}" method="POST" onsubmit="return confirm('Remove this member from the organization?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="sos-btn-danger px-3 py-1.5 text-xs">Remove</button>
+                                            </form>
+                                        @elseif ($membership->status->value === 'suspended')
+                                            <form action="{{ route('memberships.remove', $membership) }}" method="POST" onsubmit="return confirm('Remove this member from the organization?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="sos-btn-danger px-3 py-1.5 text-xs">Remove</button>
                                             </form>
                                         @endif
                                     </div>

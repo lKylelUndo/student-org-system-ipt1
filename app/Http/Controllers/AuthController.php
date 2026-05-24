@@ -74,6 +74,10 @@ class AuthController extends Controller
     {
         $user = Auth::user();
 
+        if ($user->isAdmin()) {
+            return route('admin.organizations.index');
+        }
+
         if (! $user->hasCompletedProfile()) {
             return route('profile.setup');
         }

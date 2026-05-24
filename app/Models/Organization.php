@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\MembershipStatus;
+use App\Enums\OrganizationStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,7 +14,15 @@ class Organization extends Model
         'org_name',
         'description',
         'created_by',
+        'status',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'status' => OrganizationStatus::class,
+        ];
+    }
 
     public function creator(): BelongsTo
     {

@@ -6,7 +6,7 @@
     <div class="sos-container">
         <div class="mx-auto max-w-md">
             <h1 class="sos-page-title text-center">Welcome Back</h1>
-            <p class="sos-page-subtitle text-center">Sign in to your Student Organization System account</p>
+            <p class="sos-page-subtitle text-center">Sign in as a student or administrator</p>
 
             <form action="{{ route('login') }}" method="POST" class="mt-8 space-y-5">
                 @csrf
