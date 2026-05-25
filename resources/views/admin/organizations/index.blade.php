@@ -31,7 +31,7 @@
                 <input type="search" id="leader-filter" name="leader" class="sos-input" placeholder="Leader name or email..." value="{{ $leader }}">
             </div>
             <div class="flex items-end">
-                <button type="submit" class="sos-btn-blue w-full sm:w-auto">Apply</button>
+                <button type="submit" class="sos-btn-blue w-full sm:w-auto">Search</button>
             </div>
         </form>
 

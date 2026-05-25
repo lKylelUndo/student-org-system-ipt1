@@ -82,7 +82,7 @@
                     </select>
                 </div>
                 <div class="flex items-end gap-2">
-                    <button type="submit" class="sos-btn-blue">Apply</button>
+                    <button type="submit" class="sos-btn-blue">Search</button>
                     <a href="{{ route('admin.organizations.show', $organization) }}" class="sos-btn-outline">Clear</a>
                 </div>
             </form>
