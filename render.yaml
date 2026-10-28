@@ -1,0 +1,43 @@
+# Render Blueprint for the student org system (Laravel + Docker + Neon Postgres)
+# Create the service with: Render Dashboard -> New -> Blueprint -> this repo.
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: student-org-system
+    runtime: docker
+    plan: free
+    region: singapore # matches Neon ap-southeast-1
+    healthCheckPath: /up
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        sync: false # paste from `php artisan key:generate --show`
+      - key: APP_URL
+        sync: false # paste your final https://<service>.onrender.com URL after first deploy
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: ep-bold-lake-azyipikh.c-3.ap-southeast-1.aws.neon.tech
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        value: neondb
+      - key: DB_USERNAME
+        value: neondb_owner
+      - key: DB_PASSWORD
+        sync: false # Neon password (rotate it before first real deploy!)
+      - key: DB_SSLMODE
+        value: require
+      - key: LOG_CHANNEL
+        value: stderr # so logs show up in the Render dashboard
+      - key: SESSION_DRIVER
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: CACHE_STORE
+        value: database

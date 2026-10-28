@@ -15,11 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Idempotent + Faker-free: safe to re-run on every container boot,
+        // and works in production images where faker is a dev-only package.
+        // The `hashed` cast on User hashes the plaintext automatically.
+        User::updateOrCreate(
+            ['email' => 'test@example.com'],
+            ['name' => 'Test User', 'password' => 'password'],
+        );
     }
 }

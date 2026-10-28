@@ -1,0 +1,34 @@
+# VCS
+.git
+.github
+
+# Local dependency trees (installed inside the image)
+node_modules
+vendor
+
+# Local environment files (Render injects real values)
+.env
+.env.*
+!.env.example
+
+# Stale local build artifacts (rebuilt in image stage 1)
+public/build
+public/hot
+public/storage
+
+# Logs
+storage/logs/*.log
+npm-debug.log*
+composer.log
+
+# Local SQLite leftovers
+database/*.sqlite
+
+# Tests and dev tooling (not needed in production image)
+tests
+phpunit.xml
+.phpunit.result.cache
+
+# Editor
+.idea
+.vscode
